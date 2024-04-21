@@ -1,3 +1,7 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { ReportDAOABI, contractAddress } from "@/utils/ReportDAO";
 import { useState } from "react";
 import {
@@ -30,12 +34,12 @@ const RequestReport = () => {
   };
 
   return (
-    <div>
-      <h1>Request a New Report</h1>
+    <div className="flex flex-col gap-2 p-2">
+      <h1 className="h1">Request a New Report</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="website">Website URL</label>
-          <input
+          <Label htmlFor="website">Website URL</Label>
+          <Input
             type="text"
             id="website"
             value={website}
@@ -44,8 +48,8 @@ const RequestReport = () => {
           />
         </div>
         <div>
-          <label htmlFor="description">Report Description</label>
-          <textarea
+          <Label htmlFor="description">Report Description</Label>
+          <Textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -53,8 +57,8 @@ const RequestReport = () => {
           />
         </div>
         <div>
-          <label htmlFor="fundingGoal">Funding Goal (ETH)</label>
-          <input
+          <Label htmlFor="fundingGoal">Funding Goal (ETH)</Label>
+          <Input
             type="number"
             id="fundingGoal"
             value={fundingGoal}
@@ -62,9 +66,11 @@ const RequestReport = () => {
             required
           />
         </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Requesting..." : "Request Report"}
-        </button>
+        <div>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "Requesting..." : "Request Report"}
+          </Button>
+        </div>
         {isSuccess && <p>Report requested successfully!</p>}
       </form>
     </div>

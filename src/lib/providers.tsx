@@ -1,15 +1,15 @@
-import { WagmiConfig, createConfig, configureChains, mainnet } from "wagmi";
+import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
+import { env } from "@/env.mjs";
+import React from "react";
 import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import React, { Children } from "react";
-import { env } from "@/env.mjs";
 
 // Configure chains & providers with the Alchemy provider.
 // Two popular providers are Alchemy (alchemy.com) and Infura (infura.io)
