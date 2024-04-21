@@ -18,14 +18,14 @@ import {
   usePrepareContractWrite,
 } from "wagmi";
 
+const REPORT_ID = 1;
+
 const ViewButton = ({ url }: { url: string }) => {
   const getScrapedData = async () => {
     let rawData = "";
 
     try {
-      const response = await fetch(
-        "https://r.jina.ai/" + "https://x.com/elonmusk",
-      );
+      const response = await fetch("https://r.jina.ai/" + url);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -73,7 +73,7 @@ const FundButton = ({ index }: { index: string }) => {
     address: contractAddress,
     abi: ReportDAOABI,
     functionName: "fundReport",
-    args: [BigInt(index)],
+    args: [BigInt(REPORT_ID)],
     value: BigInt(1), // Replace with the desired funding amount
   });
   const { data, write } = useContractWrite(config);
@@ -94,7 +94,7 @@ const CompleteButton = ({ index }: { index: string }) => {
     address: contractAddress,
     abi: ReportDAOABI,
     functionName: "completeReport",
-    args: [BigInt(index)],
+    args: [BigInt(REPORT_ID)],
   });
   const handleCompleteReport = (reportId: string) => {
     write?.();
@@ -123,7 +123,7 @@ const ReportList = () => {
     address: contractAddress,
     abi: ReportDAOABI,
     functionName: "getReport",
-    args: [BigInt(0)],
+    args: [BigInt(REPORT_ID)],
     watch: true, // Watch for changes
   });
 
