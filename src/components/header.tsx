@@ -1,4 +1,4 @@
-import { Croissant, User } from "lucide-react";
+import { Croissant } from "lucide-react";
 import Link from "next/link";
 
 const Header = () => {
@@ -9,11 +9,11 @@ const Header = () => {
       <nav className="container flex h-14 items-center justify-between">
         <Link className="flex flex-row gap-2" href="/">
           <Croissant />
-          <div className="font-bold">Coincidence</div>
+          <div className="font-bold">ReportDAO</div>
         </Link>
-        <Link href="/profile">
+        {/* <Link href="/profile">
           <User />
-        </Link>
+        </Link> */}
       </nav>
     </header>
   );
