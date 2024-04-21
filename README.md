@@ -8,6 +8,9 @@ https://github.com/aeither/report-dao/assets/36173828/c8e8cb6c-fc22-4cbf-aa46-0e
 
 ReportDAO is a decentralized crowdfunding platform that empowers users to request and fund web scraping reports. Simply submit a website URL, description, and funding goal to request a new report. Other users can then contribute cryptocurrency to fund the report. Once the funding goal is met, the report is generated and delivered to all contributors. With ReportDAO, you can access valuable data insights through a transparent, community-driven process.
 
+## TechStack
+- wagmi, nextjs, shadcn, solidity, arbitrum
+
 ## User Flow
 
 Request a New Report
