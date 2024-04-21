@@ -10,6 +10,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { ReportDAOABI, contractAddress } from "@/utils/ReportDAO";
+import { ChatCompletion } from "openai/resources/chat/completions";
 import { useEffect, useState } from "react";
 import {
   useContractRead,
@@ -17,23 +18,52 @@ import {
   usePrepareContractWrite,
 } from "wagmi";
 
-const ViewButton = ({ index }: { index: string }) => {
-  const { config } = usePrepareContractWrite({
-    address: contractAddress,
-    abi: ReportDAOABI,
-    functionName: "fundReport",
-    args: [BigInt(index)],
-    value: BigInt(1), // Replace with the desired funding amount
-  });
-  const { data, write } = useContractWrite(config);
+const ViewButton = ({ url }: { url: string }) => {
+  const getScrapedData = async () => {
+    let rawData = "";
 
-  const handleFundReport = (reportId: string) => {
-    write?.();
+    try {
+      const response = await fetch(
+        "https://r.jina.ai/" + "https://x.com/elonmusk",
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.text(); // Assuming the response is plain text
+      console.log(data);
+      rawData = data;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+    return rawData;
+  };
+
+  const askAi = async () => {
+    const scrapedWebsiteInfo = await getScrapedData();
+    try {
+      const response = await fetch("/api/generateReport", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: scrapedWebsiteInfo }),
+      });
+
+      const data: ChatCompletion = await response.json();
+      console.log("🚀 ~ askAi ~ data:", data);
+      if (data.choices[0]) alert(data.choices[0].message.content);
+    } catch (error) {
+      console.error("An error occurred while generating the report.");
+    } finally {
+    }
   };
 
   return (
-    <Button className="w-full" onClick={() => handleFundReport(index)}>
-      Fund Report
+    <Button className="w-full" onClick={() => askAi()}>
+      View Report
     </Button>
   );
 };
@@ -136,7 +166,7 @@ const ReportList = () => {
                   <CardFooter>
                     <div className="flex w-full gap-2">
                       {report.completed ? (
-                        <ViewButton index={index} />
+                        <ViewButton url={report.website} />
                       ) : (
                         <FundButton index={index} />
                       )}
